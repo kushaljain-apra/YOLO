@@ -11,17 +11,17 @@ data:
   cpu_num: ${cpu_num}
   shuffle: True
   pin_memory: True
-  data_augment:
-    Mosaic: 1
-    # MixUp: 1
+  data_augment: {}
+    # Mosaic: 1
+    # MixUp: 0.5  # Reduced strength for better balance
     # HorizontalFlip: 0.5
-    RandomCrop: 1
-    RemoveOutliers: 1e-8
+    # RandomCrop: 1
+    # RemoveOutliers: 1e-6  # Less aggressive outlier removal
 
 optimizer:
   type: SGD
   args:
-    lr: 0.01
+    lr: 0.005  # Reduced for better convergence
     weight_decay: 0.0005
     momentum: 0.937
     nesterov: true
@@ -29,12 +29,12 @@ optimizer:
 loss:
   objective:
     BCELoss: 0.5
-    BoxLoss: 7.5
+    BoxLoss: 5.0  # Reduced for small objects
     DFLoss: 1.5
   aux:
     0.25
   matcher:
-    iou: CIoU
+    iou: SIoU  # Better for small object detection
     topk: 10
     factor:
       iou: 6.0
@@ -47,8 +47,8 @@ scheduler:
   args:
     total_iters: ${task.epoch}
     start_factor: 1
-    end_factor: 0.01
+    end_factor: 0.001  # Lower end factor for better fine-tuning
 
 ema:
   enable: true
-  decay: 0.995
+  decay: 0.99  # Slightly lower decay for better updates

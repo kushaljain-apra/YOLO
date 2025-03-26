@@ -1,0 +1,8 @@
+path: /home/kushaljainapra/ws_kushal/ecs_training/AiClassification/data/train
+train: train
+validation: val
+
+test: test
+
+class_num: 10
+class_list: ['crush', 'debris', 'debrishalo', 'dust', 'edgecrack', 'hangingchad', 'hole', 'streak', 'thinspot', 'worm']

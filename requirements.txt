@@ -13,3 +13,5 @@ rich
 torch
 torchvision
 wandb
+scikit-learn 
+seaborn

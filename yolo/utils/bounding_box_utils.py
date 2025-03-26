@@ -489,3 +489,21 @@ def to_metrics_format(prediction: Tensor) -> Dict[str, Union[float, Tensor]]:
     if prediction.size(1) == 6:
         bbox["scores"] = prediction[:, 5]
     return bbox
+
+def convert_tensor_to_python(data: Dict[str, Union[float, torch.Tensor]]) -> Dict[str, any]:
+    """
+    Convert tensors in the given dictionary to Python native data types.
+
+    Args:
+        data (dict): Dictionary containing tensors.
+
+    Returns:
+        dict: Dictionary with tensors converted to lists or floats.
+    """
+    converted_data = {}
+    for key, value in data.items():
+        if isinstance(value, torch.Tensor):
+            converted_data[key] = value.tolist()  # Convert Tensor to list
+        else:
+            converted_data[key] = value  # Keep non-tensor values as is
+    return converted_data
